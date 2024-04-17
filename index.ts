@@ -1,10 +1,18 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { DataSource } from "typeorm";
+import cors from "cors";
+import bodyParser from "body-parser";
 
 // Instantiate express app
 const app: Express = express();
 dotenv.config();
+
+// Parse request body
+app.use(bodyParser.json());
+
+// Use CORS install types as well
+app.use(cors());
 
 // Create Database Connection
 export const AppDataSource = new DataSource({
@@ -25,9 +33,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-AppDataSource.initialize().then(() => {
-  app.listen(port);
-  console.log("Data Source has been initialized!");
-}).catch((err) => {
-  console.error('Error during Data Source initialization', err);
-});
+AppDataSource.initialize()
+  .then(() => {
+    app.listen(port);
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
