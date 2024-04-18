@@ -10,3 +10,7 @@ tasksRouter.get("/tasks", async (req: Request, res: Response) => {
   const allTasks = await taskController.getAll();
   res.json(allTasks).status(200);
 });
+
+tasksRouter.post('/tasks', async (req: Request, res: Response)=>{
+    
+})
