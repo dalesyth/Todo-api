@@ -1,7 +1,37 @@
-import { Entity } from 'typeorm';
-import { Priority } from '../enums/Priority';
-import { Status } from '../enums/Status';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Priority } from "../enums/Priority";
+import { Status } from "../enums/Status";
 
+@Entity() // invoke Entity decorator
+export class Task {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+  @Column({
+    type: "text",
+  })
+  title: string;
+  @Column({
+    type: "varchar",
+    length: 255,
+  })
+  date: string;
 
-@Entity()  // invoke Entity decorator
-export class Task {}
+  @Column({
+    type: "longtext",
+  })
+  description: string;
+
+  @Column({
+    type: "enum",
+    enum: Priority,
+    default: Priority.normal,
+  })
+  priority: Priority;
+
+  @Column({
+    type: "enum",
+    enum: Status,
+    default: Status.todo,
+  })
+  status: Status;
+}
